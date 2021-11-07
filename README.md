@@ -1,3 +1,3 @@
 # BoterKaasEieren
 
-BoterKaasEieren Terminal App voor Novi Basis Programmeren
+BoterKaasEieren command line program voor de cursus Basis Programmeren van Novi hogeschool.
