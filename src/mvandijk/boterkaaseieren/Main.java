@@ -43,10 +43,10 @@ public class Main {
 
         public void printBoard() {
             for (int i = 0; i < fields.length; i++) {
-                if (fields[i].equals("3") || fields[i].equals("6")) {
+                if (i == 2 || i == 5) {
                     System.out.print(" " + fields[i] + " \n" + "----------\n");
                 }
-                else if (fields[i].equals("9")) {
+                else if (i == 8) {
                     System.out.print(" " + fields[i] + " \n");
                 }
                 else {
@@ -110,28 +110,40 @@ public class Main {
             Player playerX = new Player();
             playerO.setPlayerTurn(true);
             playerX.setPlayerTurn(false);
-
-            speelbord.printBoard();
-
+            int turnCount = 0;
+            
             while (true) {
+                if (turnCount == 9) {
+                    System.out.println("Nobody wins!");
+                }
                 if (playerO.getHasWon()) {
-                    System.out.println("Game Over, player " + playerO.getPlayerName() + "has won!");
+                    System.out.println("Game Over, player " + playerO.getPlayerName() + " has won!");
                     break;
                 } else if (playerX.getHasWon()) { 
-                    System.out.println("Game Over, player " + playerX.getPlayerName() + "has won!");
+                    System.out.println("Game Over, player " + playerX.getPlayerName() + " has won!");
                     break;
                 } else {
                     if (playerO.isPlayerTurn()) { 
                         //TODO: Print game info to screen
+                        speelbord.printBoard();
                         speelbord.updateBoard(queryPlayerMove(), playerO.getPlayerToken());
-        
+                        
                         playerO.setHasWon(checkWinCondition(playerO.getPlayerToken(), speelbord));
+
+                        playerO.setPlayerTurn(false);
+                        playerX.setPlayerTurn(true);
+                        turnCount++;
         
                     } else if (playerX.isPlayerTurn()) { 
                         //TODO: Print game info to screen
+                        speelbord.printBoard();
                         speelbord.updateBoard(queryPlayerMove(), playerX.getPlayerToken());
-        
-                        playerO.setHasWon(checkWinCondition(playerX.getPlayerToken(), speelbord));
+                        
+                        playerX.setHasWon(checkWinCondition(playerX.getPlayerToken(), speelbord));
+
+                        playerX.setPlayerTurn(false);
+                        playerO.setPlayerTurn(true);
+                        turnCount++;
                     }
                 }
             }
